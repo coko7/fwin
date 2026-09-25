@@ -38,6 +38,17 @@ irm "https://raw.githubusercontent.com/coko7/f-win/refs/heads/main/fwin.ps1" | i
 
 ## 🐛 Issues
 
+### Could not create SSL/TLS secure channel
+
+Older Windows PowerShell (e.g. on Windows Server) does not enable TLS 1.2 by default, which GitHub requires.
+In this case, you will first need to enable it for your current terminal session:
+
+```ps1
+[Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
+```
+
+Once done, you can try running the setup command once more.
+
 ### Cannot resolve 7-zip hostname
 
 Scoop needs [7-zip](https://www.7-zip.org/) to install packages correctly.
