@@ -1,10 +1,26 @@
-# 🤬 f-win
+<div align="center">
 
-![](./tux-smashing-with-the-foss-wrench.png)
+# 🤬 f-win
 
 A handy script to "*fix*" Windows by installing decent CLIs and apps.
 
-## 🛠️ Setup / Usage
+</div>
+
+![](./tux-smashing-with-the-foss-wrench.png)
+
+<p align="center">
+    <img src="https://img.shields.io/badge/Patience_when_using_Windows-0%25-orange" alt="My amount of patience with Windows (0%)">
+    <img src="https://img.shields.io/badge/Owns_a_MS_punching_bag-YES-green" alt="I own a MS punching bag">
+    <img src="https://img.shields.io/badge/Favorite_Windows_feature-Uninstall-blue" alt="Uninstalling Windows is my favorite feature">
+</p>
+
+## 🤔 Why?
+
+> Because I love **Windows** from the bottom of my heart 🩵.
+>
+> *~said nobody*
+
+## 🛠️  Setup / Usage
 
 Run it with one command:
 
