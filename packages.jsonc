@@ -3,7 +3,8 @@
     {
       "name": "ripgrep",
       "packageIds": {
-        "scoop": "main/ripgrep"
+        "scoop": "main/ripgrep",
+        "winget": "BurntSushi.ripgrep.MSVC"
       },
       "importance": "required",
       "description": "blazingly fast grepping"
@@ -11,7 +12,8 @@
     {
       "name": "NeoVim",
       "packageIds": {
-        "scoop": "main/neovim"
+        "scoop": "main/neovim",
+        "winget": "Neovim.Neovim"
       },
       "importance": "required",
       "description": "A decent text editor"
@@ -19,7 +21,8 @@
     {
       "name": "MS Edit",
       "packageIds": {
-        "scoop": "main/edit"
+        "scoop": "main/edit",
+        "winget": "Microsoft.Edit"
       },
       "importance": "optional",
       "description": "A passable text editor"
@@ -27,7 +30,8 @@
     {
       "name": "zoxide",
       "packageIds": {
-        "scoop": "main/zoxide"
+        "scoop": "main/zoxide",
+        "winget": "ajeetdsouza.zoxide"
       },
       "importance": "needed",
       "description": "Upgraded `cd`"
@@ -35,7 +39,8 @@
     {
       "name": "atuin",
       "packageIds": {
-        "scoop": "main/atuin"
+        "scoop": "main/atuin",
+        "winget": "Atuinsh.Atuin"
       },
       "importance": "optional",
       "description": "Awesome history management"
@@ -43,7 +48,8 @@
     {
       "name": "starship",
       "packageIds": {
-        "scoop": "main/starship"
+        "scoop": "main/starship",
+        "winget": "Starship.Starship"
       },
       "importance": "optional",
       "description": "Decent shell prompt"
@@ -51,15 +57,26 @@
     {
       "name": "fzf",
       "packageIds": {
-        "scoop": "main/fzf"
+        "scoop": "main/fzf",
+        "winget": "junegunn.fzf"
       },
       "importance": "required",
       "description": "the greatest command-line fuzzy finder"
     },
     {
+      "name": "gum",
+      "packageIds": {
+        "scoop": "charm-gum",
+        "winget": "charmbracelet.gum"
+      },
+      "importance": "required",
+      "description": "A tool for glamorous shell scripts 🎀"
+    },
+    {
       "name": "bat",
       "packageIds": {
-        "scoop": "main/bat"
+        "scoop": "main/bat",
+        "winget": "sharkdp.bat"
       },
       "importance": "needed",
       "description": "like UNIX cat but fancier"
@@ -67,7 +84,8 @@
     {
       "name": "delta",
       "packageIds": {
-        "scoop": "main/delta"
+        "scoop": "main/delta",
+        "winget": "dandavison.delta"
       },
       "importance": "optional",
       "description": "a syntax-highlighting pager for git, diff, grep, and blame output"
@@ -75,7 +93,8 @@
     {
       "name": "fd",
       "packageIds": {
-        "scoop": "main/fd"
+        "scoop": "main/fd",
+        "winget": "sharkdp.fd"
       },
       "importance": "needed",
       "description": "modern alternative to UNIX find command"
@@ -83,7 +102,8 @@
     {
       "name": "eza",
       "packageIds": {
-        "scoop": "main/eza"
+        "scoop": "main/eza",
+        "winget": "eza-community.eza"
       },
       "importance": "optional",
       "description": "modern alternative to ls"
@@ -91,7 +111,8 @@
     {
       "name": "Yazi",
       "packageIds": {
-        "scoop": "main/yazi"
+        "scoop": "main/yazi",
+        "winget": "sxyazi.yazi"
       },
       "importance": "needed",
       "description": "TUI file explorer for ducks"
@@ -99,7 +120,8 @@
     {
       "name": "xh",
       "packageIds": {
-        "scoop": "main/xh"
+        "scoop": "main/xh",
+        "winget": "ducaale.xh"
       },
       "importance": "optional",
       "description": "modern alternative to cURL"
@@ -107,7 +129,8 @@
     {
       "name": "jq",
       "packageIds": {
-        "scoop": "main/jq"
+        "scoop": "main/jq",
+        "winget": "jqlang.jq"
       },
       "importance": "optional",
       "description": "command-line JSON processor"
@@ -115,7 +138,8 @@
     {
       "name": "zellij",
       "packageIds": {
-        "scoop": "main/zellij"
+        "scoop": "main/zellij",
+        "winget": "Zellij.Zellij"
       },
       "importance": "optional",
       "description": "terminal multiplexer"
@@ -123,7 +147,8 @@
     {
       "name": "bottom",
       "packageIds": {
-        "scoop": "main/bottom"
+        "scoop": "main/bottom",
+        "winget": "Clement.bottom"
       },
       "importance": "optional",
       "description": "system monitor tool (like top, htop, btop++, etc.)"
@@ -131,7 +156,8 @@
     {
       "name": "dust",
       "packageIds": {
-        "scoop": "main/dust"
+        "scoop": "main/dust",
+        "winget": "bootandy.dust"
       },
       "importance": "optional",
       "description": "a more intuitive version of du in rust"
@@ -139,7 +165,8 @@
     {
       "name": "gsudo",
       "packageIds": {
-        "scoop": "main/gsudo"
+        "scoop": "main/gsudo",
+        "winget": "gerardog.gsudo"
       },
       "importance": "needed",
       "description": "UNIX sudo but on Windows"
@@ -150,21 +177,24 @@
     {
       "name": "MS PowerToys",
       "packageIds": {
-        "scoop": "extras/powertoys"
+        "scoop": "extras/powertoys",
+        "winget": "Microsoft.PowerToys"
       },
       "importance": "optional"
     },
     {
       "name": "Flow Launcher",
       "packageIds": {
-        "scoop": "extras/flow-launcher"
+        "scoop": "extras/flow-launcher",
+        "winget": "Flow-Launcher.Flow-Launcher"
       },
       "importance": "optional"
     },
     {
       "name": "WezTerm",
       "packageIds": {
-        "scoop": "extras/wezterm"
+        "scoop": "extras/wezterm",
+        "winget": "wez.wezterm"
       },
       "importance": "optional"
     }
