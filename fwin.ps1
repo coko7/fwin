@@ -132,7 +132,7 @@ function Install-Package
 # Since this script uses fzf and gum for its TUI, we need to install them first.
 $bootstrap = @{
   winget = @('junegunn.fzf', 'charmbracelet.gum')
-  scoop = @('main/fzf', 'main/gum')
+  scoop = @('main/fzf', 'main/charm-gum')
 }
 
 foreach ($id in $bootstrap[$PackageManager])
