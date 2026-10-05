@@ -52,8 +52,19 @@ if (Test-Command winget)
   if (-not (Test-Command scoop))
   {
     Write-Host 'Neither winget nor scoop found, installing scoop...'
+
     Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
-    Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
+    $installer = [scriptblock]::Create((Invoke-RestMethod -Uri https://get.scoop.sh))
+
+    # Scoop installer refuses to run elevated unless explicitly told to
+    $isAdmin = ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+    if ($isAdmin)
+    {
+      & $installer -RunAsAdmin
+    } else
+    {
+      & $installer
+    }
     Update-SessionPath
   }
 
