@@ -13,8 +13,17 @@
 $ErrorActionPreference = 'Stop'
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
-# Older Windows PowerShell defaults to SSL3/TLS 1.0, which GitHub rejects
-[Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
+# Older Windows PowerShell defaults to SSL3/TLS 1.0, which GitHub rejects.
+# 3072 is Tls12: the enum member does not exist before .NET 4.5, but the protocol may still be supported by the OS.
+try
+{
+  [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]3072
+} catch
+{
+  Write-Error ('Could not enable TLS 1.2, which GitHub requires. ' +
+    'Install .NET Framework 4.5+ (and the TLS 1.2 update for your Windows version), then try again.')
+  exit 1
+}
 
 $PackagesUrl = 'https://raw.githubusercontent.com/coko7/fwin/refs/heads/main/packages.jsonc'
 

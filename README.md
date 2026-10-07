@@ -41,13 +41,14 @@ irm "https://raw.githubusercontent.com/coko7/f-win/refs/heads/main/fwin.ps1" | i
 ### Could not create SSL/TLS secure channel
 
 Older Windows PowerShell (e.g. on Windows Server) does not enable TLS 1.2 by default, which GitHub requires.
-In this case, you will first need to enable it for your current terminal session:
+The script enables it for its own downloads, but the command fetching the script itself runs before that.
+In this case, enable TLS 1.2 in the same command:
 
 ```ps1
-[Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
+[Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor 3072; irm "https://fwin.lazyfreax.dev" | iex
 ```
 
-Once done, you can try running the setup command once more.
+If it still fails, your machine likely lacks .NET Framework 4.5+ or the OS-level TLS 1.2 update.
 
 ### Cannot resolve 7-zip hostname
 
