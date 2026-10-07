@@ -149,27 +149,23 @@ function Install-Package
   }
 }
 
-# Since this script uses fzf and gum for its TUI, we need to install them first.
+# Since this script uses gum for its TUI, we need to install it first.
 $bootstrap = @{
-  winget = @('junegunn.fzf', 'charmbracelet.gum')
-  scoop = @('main/fzf', 'main/charm-gum')
+  winget = 'charmbracelet.gum'
+  scoop = 'main/charm-gum'
 }
 
-foreach ($id in $bootstrap[$PackageManager])
-{
-  Install-Package $id
-}
-
+Install-Package $bootstrap[$PackageManager]
 Update-SessionPath
 
-foreach ($tool in @('fzf', 'gum'))
+if (-not (Test-Command gum))
 {
-  if (-not (Test-Command $tool))
-  {
-    Write-Error "$tool is not available after install, aborting. Try opening a new shell and running the script again."
-    exit 1
-  }
+  Write-Error 'gum is not available after install, aborting. Try opening a new shell and running the script again.'
+  exit 1
 }
+
+# Windows PowerShell pipes ASCII to native commands by default, which mangles emojis sent to gum
+$OutputEncoding = New-Object System.Text.UTF8Encoding $false
 
 # Load the packages list: Tries local file first, falls back to $PackagesUrl otherwise.
 $localPackages = if ($PSScriptRoot) { Join-Path $PSScriptRoot 'packages.jsonc' }
@@ -198,28 +194,24 @@ $candidates = @($catalog.all) + @($catalog.$mode) | Where-Object {
   return $false
 }
 
-# Required packages are always installed, the rest is up to the user
-$required = @($candidates | Where-Object { $_.importance -eq 'required' })
-
-$selectable = @($candidates | Where-Object { $_.importance -ne 'required' })
-
-$selected = @()
-if ($selectable.Count -gt 0)
+# Every package is up to the user, nothing gets installed without being picked
+$byLine = @{}
+$lines = foreach ($pkg in $candidates)
 {
-  $lines = for ($i = 0; $i -lt $selectable.Count; $i++)
-  {
-    $pkg = $selectable[$i]
-    "{0}`t{1,-15} {2,-10} {3}" -f $i, $pkg.name, "[$($pkg.importance)]", $pkg.description
-  }
-
-  $picked = $lines | fzf --multi --delimiter "`t" --with-nth 2.. `
-    --header 'TAB: toggle | CTRL-A: select all | ENTER: confirm' `
-    --bind 'ctrl-a:select-all'
-
-  $selected = @($picked | Where-Object { $_ } | ForEach-Object { $selectable[[int]($_ -split "`t")[0]] })
+  $line = '{0,-15} {1}' -f $pkg.name, $pkg.description
+  $byLine[$line] = $pkg
+  $line
 }
 
-$toInstall = @($required) + @($selected)
+$picked = $lines | gum filter --no-limit --header 'TAB: toggle | ENTER: confirm' --placeholder 'Search packages...'
+
+$toInstall = @($picked | Where-Object { $_ } | ForEach-Object { $byLine[$_] } | Where-Object { $_ })
+if ($toInstall.Count -eq 0)
+{
+  Write-Host 'No package selected, nothing to do.'
+  exit 0
+}
+
 Write-Host "`nAbout to install ($mode mode, via $PackageManager):"
 $toInstall | ForEach-Object { Write-Host "  - $($_.name)" }
 

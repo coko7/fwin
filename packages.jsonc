@@ -7,7 +7,6 @@
         "scoop": "main/ripgrep",
         "winget": "BurntSushi.ripgrep.MSVC"
       },
-      "importance": "required",
       "description": "ripgrep recursively searches directories for a regex pattern while respecting your gitignore"
     },
     {
@@ -17,7 +16,6 @@
         "scoop": "main/neovim",
         "winget": "Neovim.Neovim"
       },
-      "importance": "required",
       "description": "Vim-fork focused on extensibility and usability"
     },
     {
@@ -27,7 +25,6 @@
         "scoop": "main/edit",
         "winget": "Microsoft.Edit"
       },
-      "importance": "optional",
       "description": "We all edit."
     },
     {
@@ -37,7 +34,6 @@
         "scoop": "main/zoxide",
         "winget": "ajeetdsouza.zoxide"
       },
-      "importance": "needed",
       "description": "A smarter cd command. Supports all major shells."
     },
     {
@@ -47,7 +43,6 @@
         "scoop": "main/atuin",
         "winget": "Atuinsh.Atuin"
       },
-      "importance": "optional",
       "description": "✨ Making your shell magical"
     },
     {
@@ -57,7 +52,6 @@
         "scoop": "main/starship",
         "winget": "Starship.Starship"
       },
-      "importance": "optional",
       "description": "☄🌌️  The minimal, blazing-fast, and infinitely customizable prompt for any shell!"
     },
     {
@@ -67,7 +61,6 @@
         "scoop": "main/fzf",
         "winget": "junegunn.fzf"
       },
-      "importance": "required",
       "description": "🌸 A command-line fuzzy finder"
     },
     {
@@ -77,7 +70,6 @@
         "scoop": "charm-gum",
         "winget": "charmbracelet.gum"
       },
-      "importance": "required",
       "description": "A tool for glamorous shell scripts 🎀"
     },
     {
@@ -87,7 +79,6 @@
         "scoop": "main/bat",
         "winget": "sharkdp.bat"
       },
-      "importance": "needed",
       "description": "A cat(1) clone with wings."
     },
     {
@@ -97,7 +88,6 @@
         "scoop": "main/delta",
         "winget": "dandavison.delta"
       },
-      "importance": "optional",
       "description": "A syntax-highlighting pager for git, diff, grep, rg --json, and blame output"
     },
     {
@@ -107,7 +97,6 @@
         "scoop": "main/fd",
         "winget": "sharkdp.fd"
       },
-      "importance": "needed",
       "description": "A simple, fast and user-friendly alternative to 'find'"
     },
     {
@@ -117,7 +106,6 @@
         "scoop": "main/eza",
         "winget": "eza-community.eza"
       },
-      "importance": "optional",
       "description": "A modern alternative to ls"
     },
     {
@@ -127,7 +115,6 @@
         "scoop": "main/yazi",
         "winget": "sxyazi.yazi"
       },
-      "importance": "needed",
       "description": "💥 Blazing fast terminal file manager written in Rust, based on async I/O."
     },
     {
@@ -137,7 +124,6 @@
         "scoop": "main/xh",
         "winget": "ducaale.xh"
       },
-      "importance": "optional",
       "description": "Friendly and fast tool for sending HTTP requests"
     },
     {
@@ -147,7 +133,6 @@
         "scoop": "main/jq",
         "winget": "jqlang.jq"
       },
-      "importance": "optional",
       "description": "Command-line JSON processor"
     },
     {
@@ -157,7 +142,6 @@
         "scoop": "main/zellij",
         "winget": "Zellij.Zellij"
       },
-      "importance": "optional",
       "description": "A terminal workspace with batteries included"
     },
     {
@@ -167,7 +151,6 @@
         "scoop": "main/bottom",
         "winget": "Clement.bottom"
       },
-      "importance": "optional",
       "description": "Yet another cross-platform graphical process/system monitor."
     },
     {
@@ -177,7 +160,6 @@
         "scoop": "main/dust",
         "winget": "bootandy.dust"
       },
-      "importance": "optional",
       "description": "A more intuitive version of du in rust"
     },
     {
@@ -187,7 +169,6 @@
         "scoop": "main/gsudo",
         "winget": "gerardog.gsudo"
       },
-      "importance": "needed",
       "description": "Sudo for Windows"
     }
   ],
@@ -200,7 +181,6 @@
         "scoop": "extras/powertoys",
         "winget": "Microsoft.PowerToys"
       },
-      "importance": "optional",
       "description": "Microsoft PowerToys is a collection of utilities that supercharge productivity and customization on Windows"
     },
     {
@@ -210,7 +190,6 @@
         "scoop": "extras/flow-launcher",
         "winget": "Flow-Launcher.Flow-Launcher"
       },
-      "importance": "optional",
       "description": ":mag: Quick file search & app launcher for Windows with community-made plugins"
     },
     {
@@ -220,7 +199,6 @@
         "scoop": "extras/wezterm",
         "winget": "wez.wezterm"
       },
-      "importance": "optional",
       "description": "A GPU-accelerated cross-platform terminal emulator and multiplexer written by @wez and implemented in Rust"
     }
   ]
