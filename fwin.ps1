@@ -152,6 +152,62 @@ function Install-Package
   }
 }
 
+# Write the shellInit snippets of every installed package into a managed block of the PowerShell profiles.
+# The block is regenerated on each run, so tools installed by previous runs are kept and order stays stable.
+function Update-ShellProfile
+{
+  param(
+    [Parameter(Mandatory=$true)]
+    [object[]]$Packages
+  )
+
+  $snippets = foreach ($pkg in $Packages)
+  {
+    $init = $pkg.shellInit
+    if (-not $init -or -not (Test-Command $init.command)) { continue }
+
+    # Guarded so the profile does not break if the tool gets uninstalled later
+    "# $($pkg.name)"
+    "if (Get-Command $($init.command) -ErrorAction SilentlyContinue)"
+    '{'
+    $init.powershell | ForEach-Object { "  $_" }
+    '}'
+  }
+
+  if (-not $snippets)
+  {
+    Write-Host 'No installed package needs shell setup.'
+    return
+  }
+
+  $begin = '# >>> fwin shell integrations >>>'
+  $end = '# <<< fwin shell integrations <<<'
+  $block = (@($begin, '# Managed by fwin, changes inside this block get overwritten.') + $snippets + $end) -join "`r`n"
+
+  # Windows PowerShell 5.1 and PowerShell 7+ use separate profiles, set up both
+  $docs = [Environment]::GetFolderPath('MyDocuments')
+  foreach ($dir in @('WindowsPowerShell', 'PowerShell'))
+  {
+    $profilePath = Join-Path (Join-Path $docs $dir) 'profile.ps1'
+    $content = if (Test-Path $profilePath) { Get-Content -Raw -Path $profilePath } else { '' }
+    if (-not $content) { $content = '' }
+
+    $pattern = '(?s)' + [regex]::Escape($begin) + '.*?' + [regex]::Escape($end)
+    if ($content -match $pattern)
+    {
+      # Script block replacement, so $ in snippets is not read as a regex substitution
+      $content = [regex]::Replace($content, $pattern, { $block })
+    } else
+    {
+      $content = $content.TrimEnd() + $(if ($content.Trim()) { "`r`n`r`n" }) + $block + "`r`n"
+    }
+
+    New-Item -ItemType Directory -Force -Path (Split-Path $profilePath) | Out-Null
+    Set-Content -Path $profilePath -Value $content -Encoding UTF8 -NoNewline
+    Write-Host "Updated shell integrations in $profilePath"
+  }
+}
+
 # Since this script uses gum for its TUI, we need to install it first.
 $bootstrap = @{
   winget = 'charmbracelet.gum'
@@ -228,6 +284,17 @@ if ($LASTEXITCODE -ne 0)
 foreach ($pkg in $toInstall)
 {
   Install-Package $pkg.packageIds.$PackageManager
+}
+
+Update-SessionPath
+
+# Use the whole catalog so tools installed by previous runs keep their setup
+$withShellInit = @($catalog.all) + @($catalog.desktop) + @($catalog.server) | Where-Object { $_.shellInit }
+gum confirm 'Set up shell integrations (starship, zoxide, ...) in your PowerShell profile?'
+if ($LASTEXITCODE -eq 0)
+{
+  Update-ShellProfile $withShellInit
+  Write-Host 'Open a new shell to load them.'
 }
 
 Write-Host '🚀 Congratulations. Your Windows dev setup is now a tiny bit better ✨'

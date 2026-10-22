@@ -27,6 +27,23 @@
       },
       "description": "We all edit."
     },
+    // shellInit entries end up in the PowerShell profile in this file's order.
+    // starship must come before atuin, since atuin wraps the prompt function starship defines.
+    {
+      "name": "starship",
+      "sourceUrl": "https://github.com/starship/starship",
+      "packageIds": {
+        "scoop": "main/starship",
+        "winget": "Starship.Starship"
+      },
+      "description": "☄🌌️  The minimal, blazing-fast, and infinitely customizable prompt for any shell!",
+      "shellInit": {
+        "command": "starship",
+        "powershell": [
+          "Invoke-Expression (& starship init powershell)"
+        ]
+      }
+    },
     {
       "name": "zoxide",
       "sourceUrl": "https://github.com/ajeetdsouza/zoxide",
@@ -34,7 +51,13 @@
         "scoop": "main/zoxide",
         "winget": "ajeetdsouza.zoxide"
       },
-      "description": "A smarter cd command. Supports all major shells."
+      "description": "A smarter cd command. Supports all major shells.",
+      "shellInit": {
+        "command": "zoxide",
+        "powershell": [
+          "Invoke-Expression (& { (zoxide init powershell | Out-String) })"
+        ]
+      }
     },
     {
       "name": "atuin",
@@ -43,16 +66,13 @@
         "scoop": "main/atuin",
         "winget": "Atuinsh.Atuin"
       },
-      "description": "✨ Making your shell magical"
-    },
-    {
-      "name": "starship",
-      "sourceUrl": "https://github.com/starship/starship",
-      "packageIds": {
-        "scoop": "main/starship",
-        "winget": "Starship.Starship"
-      },
-      "description": "☄🌌️  The minimal, blazing-fast, and infinitely customizable prompt for any shell!"
+      "description": "✨ Making your shell magical",
+      "shellInit": {
+        "command": "atuin",
+        "powershell": [
+          "atuin init powershell | Out-String | Invoke-Expression"
+        ]
+      }
     },
     {
       "name": "fzf",
@@ -115,7 +135,24 @@
         "scoop": "main/yazi",
         "winget": "sxyazi.yazi"
       },
-      "description": "💥 Blazing fast terminal file manager written in Rust, based on async I/O."
+      "description": "💥 Blazing fast terminal file manager written in Rust, based on async I/O.",
+      "shellInit": {
+        "command": "yazi",
+        "powershell": [
+          "# y: open yazi and cd into the directory it was left in",
+          "function y",
+          "{",
+          "  $tmp = (New-TemporaryFile).FullName",
+          "  yazi.exe $args --cwd-file=\"$tmp\"",
+          "  $cwd = Get-Content -Path $tmp -Encoding UTF8",
+          "  if ($cwd -and $cwd -ne $PWD.Path -and (Test-Path -LiteralPath $cwd -PathType Container))",
+          "  {",
+          "    Set-Location -LiteralPath (Resolve-Path -LiteralPath $cwd).Path",
+          "  }",
+          "  Remove-Item -Path $tmp",
+          "}"
+        ]
+      }
     },
     {
       "name": "xh",
