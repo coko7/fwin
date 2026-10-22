@@ -53,6 +53,9 @@ function Update-SessionPath
 # It turns out some versions of Windows serrver DO NOT come with a package manager.
 # ...
 # 🤦
+#
+# Session PATH can be stale (e.g. sshd started before scoop was installed), so reload it first.
+Update-SessionPath
 if (Test-Command winget)
 {
   $PackageManager = 'winget'
