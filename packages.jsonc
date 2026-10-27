@@ -200,6 +200,14 @@
       "description": "A more intuitive version of du in rust"
     },
     {
+      "name": "ouch",
+      "sourceUrl": "https://github.com/ouch-org/ouch",
+      "packageIds": {
+        "scoop": "main/ouch"
+      },
+      "description": "Painless compression and decompression in the terminal"
+    },
+    {
       "name": "gsudo",
       "sourceUrl": "https://github.com/gerardog/gsudo",
       "packageIds": {
