@@ -116,7 +116,7 @@ function Test-PackageInstalled
 
   if ($PackageManager -eq 'winget')
   {
-    winget list --id $Id --exact --accept-source-agreements *> $null
+    winget list --id $Id --exact --source winget --accept-source-agreements *> $null
     return $LASTEXITCODE -eq 0
   }
 
@@ -140,7 +140,7 @@ function Install-Package
   Write-Host "Installing $Id..."
   if ($PackageManager -eq 'winget')
   {
-    winget install --id $Id --exact --silent --accept-package-agreements --accept-source-agreements
+    winget install --id $Id --exact --source winget --silent --accept-package-agreements --accept-source-agreements
   } else
   {
     scoop install $Id
