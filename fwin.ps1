@@ -45,6 +45,44 @@ function Update-SessionPath
   $env:Path = "$machine;$user"
 }
 
+# A scoop shim on PATH does not mean scoop works: an interrupted self-update renames
+# apps\scoop\current away without putting the new version in place, and every scoop call then fails.
+function Repair-Scoop
+{
+  $shim = Get-Command scoop -CommandType ExternalScript, Application -ErrorAction SilentlyContinue | Select-Object -First 1
+  if (-not $shim)
+  {
+    return
+  }
+
+  $root = Split-Path (Split-Path $shim.Source)
+  $apps = Join-Path $root 'apps\scoop'
+  $current = Join-Path $apps 'current'
+  if (Test-Path (Join-Path $current 'bin\scoop.ps1'))
+  {
+    return
+  }
+
+  Write-Warning "Scoop at $root is broken ($current\bin\scoop.ps1 is missing), repairing..."
+  if (-not (Test-Path $current))
+  {
+    # Leftovers of the update: 'new' is the version it was moving to, 'old' the one it moved away
+    foreach ($leftover in 'new', 'old')
+    {
+      if (Test-Path (Join-Path $apps "$leftover\bin\scoop.ps1"))
+      {
+        Rename-Item (Join-Path $apps $leftover) 'current'
+        Write-Host "Restored scoop from apps\scoop\$leftover"
+        return
+      }
+    }
+  }
+
+  # Nothing to restore. The scoop installer refuses to run while a scoop command exists, so remove the dead shims.
+  Remove-Item (Join-Path $root 'shims\scoop*') -Force
+  Write-Host 'Removed broken scoop shims, scoop will be reinstalled'
+}
+
 # Pick the package manager. It tries winget first.
 # If it cannot find winget, it fallbacks to scoop and installs the latter if also missing.
 #
@@ -61,6 +99,7 @@ if (Test-Command winget)
   $PackageManager = 'winget'
 } else
 {
+  Repair-Scoop
   if (-not (Test-Command scoop))
   {
     Write-Host 'Neither winget nor scoop found, installing scoop...'
