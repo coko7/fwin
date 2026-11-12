@@ -221,7 +221,17 @@ function Update-ShellProfile
 
   $begin = '# >>> fwin shell integrations >>>'
   $end = '# <<< fwin shell integrations <<<'
-  $block = (@($begin, '# Managed by fwin, changes inside this block get overwritten.') + $snippets + $end) -join "`r`n"
+  # Some sessions (e.g. over SSH) start without the PATH entries from the registry, which hides installed tools.
+  # Missing entries are appended rather than replacing PATH, so entries set by the terminal itself are kept.
+  $pathFix = @(
+    '# Add PATH entries from the registry that this session is missing'
+    "foreach (`$dir in ([Environment]::GetEnvironmentVariable('Path', 'Machine') + ';' + [Environment]::GetEnvironmentVariable('Path', 'User')) -split ';')"
+    '{'
+    "  if (`$dir -and (`$env:Path -split ';') -notcontains `$dir) { `$env:Path += `";`$dir`" }"
+    '}'
+  )
+
+  $block = (@($begin, '# Managed by fwin, changes inside this block get overwritten.') + $pathFix + $snippets + $end) -join "`r`n"
 
   # Windows PowerShell 5.1 and PowerShell 7+ use separate profiles, set up both
   $docs = [Environment]::GetFolderPath('MyDocuments')
